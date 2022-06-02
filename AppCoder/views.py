@@ -9,3 +9,7 @@ def curso(self):
     documentoDeTexto = f"---> Curso: {curso.nombre} ---> Camada: {curso.camada}"
 
     return HttpResponse(documentoDeTexto)
+
+def profesores(self):
+    documento = f"Pagina de profesores"
+    return HttpResponse(documento)
