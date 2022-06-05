@@ -4,11 +4,18 @@
 <h3>Formulario para profesores</h3>
 {% endblock %}
 {% block contenidoQueCambia %}
-<form action="{% url 'profesorFormulario' %}" method="POST">{% csrf_token %}
+
+{% if miFormulario.errors %}
+
+  <p style="color: red;"> Están mal los datos, revisar</p>
+
+ {% endif %}
+
+ <form action="" method="POST">{% csrf_token %}
   <h1>Ingrese los datos del profesor</h1>
   <table>
     {{miFormulario.as_table}}
   </table>
-  <input type="submit" value="Enviar Formulario hecho con la API">
+  <input type="submit" value="Enviar formulario">
 </form>
 {% endblock %} 

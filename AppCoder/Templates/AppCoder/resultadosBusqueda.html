@@ -4,7 +4,7 @@
 <h3>Resultado de su búsqueda</h3>
 {% endblock %}
 {% block contenidoQueCambia %}
-<h1> Estamos buscando los cursos de la comision {{camada}}</h1>
+<h3> Estamos buscando los cursos de la comision {{camada}}</h3>
 {% if cursos %}
 <ul>
   {% for curso in cursos %}
@@ -13,5 +13,10 @@
   <br>
   {% endfor%}
 </ul>
+
+{% else %}
+<p style="color: red;"></p>No hay datos con esa descripcion</p>
+
 {% endif %}
 {% endblock %}
+

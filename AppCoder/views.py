@@ -1,8 +1,8 @@
 from django.http import HttpResponse 
 from django.shortcuts import render, HttpResponse
 from django.template import loader
-from AppCoder.models import Curso, Profesor
-from AppCoder.forms import CursoFormulario, ProfesorFormulario
+from AppCoder.models import Curso, Profesor, Estudiantes, Entregable
+from AppCoder.forms import CursoFormulario, ProfesorFormulario, EstudiantesFormulario, EntregablesFormulario
 
 
 # Create your views here.
@@ -23,7 +23,7 @@ def estudiantes(request):
 def entregables(request):
     return render(request, "AppCoder/entregables.html")
 
-def cursoFormulario(request):
+def curso(request):
     if request.method == 'POST':
         miFormulario = CursoFormulario(request.POST)
         print(miFormulario)
@@ -37,9 +37,9 @@ def cursoFormulario(request):
     else:
         miFormulario = CursoFormulario()        
         
-    return render(request, "AppCoder/cursoFormulario.html", {"miFormulario":miFormulario})    
+    return render(request, "AppCoder/curso.html", {"miFormulario":miFormulario})    
 
-def profesorFormulario(request):
+def profesores(request):
   if request.method == 'POST':
     miFormulario = ProfesorFormulario(request.POST)
     if miFormulario.is_valid():
@@ -51,20 +51,63 @@ def profesorFormulario(request):
 
     profesor = Profesor(nombre=nombre, apellido=apellido, email=email, profesion=profesion)
     profesor.save()
-    return render(request, 'AppCoder/inicio.html')
+    return render(request, "AppCoder/inicio.html")
   else:
     miFormulario = ProfesorFormulario()
-  return render(request, 'appCoder/profesorFormulario.html', {'miFormulario':miFormulario})
+  return render(request, 'appCoder/profesores.html', {'miFormulario':miFormulario})
+
+def estudiantes(request):
+  if request.method == 'POST':
+    miFormulario = EstudiantesFormulario(request.POST)
+    if miFormulario.is_valid():
+      informacion = miFormulario.cleaned_data
+    nombre = informacion['nombre']
+    apellido = informacion['apellido']
+    email = informacion['email']
+    
+
+    estudiantes = Estudiantes(nombre=nombre, apellido=apellido, email=email)
+    estudiantes.save()
+    return render(request, "AppCoder/inicio.html")
+  else:
+    miFormulario = EstudiantesFormulario()
+  return render(request, 'appCoder/estudiantes.html', {'miFormulario':miFormulario})  
+
+def entregables(request):
+  if request.method == 'POST':
+    miFormulario = EntregablesFormulario(request.POST)
+    if miFormulario.is_valid():
+      informacion = miFormulario.cleaned_data
+    nombre = informacion['nombre']
+    fechaDeEntrega= informacion['fechaDeEntrega']
+    entregado = informacion['entregado']
+ 
+
+    entregables = Entregable(nombre=nombre, fechaDeEntrega=fechaDeEntrega, entregado=entregado)
+    entregables.save()
+    return render(request, "AppCoder/inicio.html")
+  else:
+    miFormulario = EntregablesFormulario()
+  return render(request, 'appCoder/entregables.html', {'miFormulario':miFormulario})  
 
 
 def busquedaCamada(request):
   return render(request, 'appCoder/busquedaCamada.html')
 
 def buscar(request):
-  # respuesta = f"Estoy buscando la comisión {request.GET['camada']}"
-  if request.GET['camada']:
-    camada = request.GET['camada']
-    cursos = Curso.objects.filter(camada=camada)
-    return render(request, 'appCoder/resultadosBusqueda.html', {'cursos':cursos, 'camada':camada})
-  else:
-    respuesta = "No se ha ingresado ninguna comisión"
+
+      if  request.GET["camada"]:
+
+	      #respuesta = f"Estoy buscando la camada nro: {request.GET['camada'] }" 
+            camada = request.GET['camada'] 
+            cursos = Curso.objects.filter(camada__icontains=camada)
+
+            return render(request, "AppCoder/resultadosBusqueda.html", {"cursos":cursos, "camada":camada})
+
+      else: 
+
+	      respuesta = "No enviaste datos"
+
+      #No olvidar from django.http import HttpResponse
+      return HttpResponse(respuesta)
+     
