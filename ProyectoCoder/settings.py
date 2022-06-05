@@ -53,9 +53,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'ProyectoCoder.urls'
 
 TEMPLATES = [
-    {
+    {        'DIRS': ['C:/Users/georg/OneDrive/Documentos/Python/ProyectoCoder/AppCoder/Templates/'],
+
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
