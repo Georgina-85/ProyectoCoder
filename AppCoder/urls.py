@@ -1,7 +1,7 @@
 from django.urls import path
-from AppWeb.views import profesores, curso, inicio, entregables, estudiantes, buscar, busquedaCamada 
-#from AppWeb.views import cursoFormulario, profesorFormulario
-from AppWeb import views
+from AppCoder.views import profesores, curso, inicio, entregables, estudiantes, buscar, busquedaCamada 
+#from AppCoder.views import cursoFormulario, profesorFormulario
+from AppCoder import views
 
 
 urlpatterns = [
