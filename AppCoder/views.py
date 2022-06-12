@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse
 from django.template import loader
 from AppCoder.models import Curso, Profesor, Estudiantes, Entregable
 from AppCoder.forms import CursoFormulario, ProfesorFormulario, EstudiantesFormulario, EntregablesFormulario
+from django.views.generic import ListView
 
 
 # Create your views here.
@@ -91,23 +92,60 @@ def entregables(request):
   return render(request, 'appCoder/entregables.html', {'miFormulario':miFormulario})  
 
 
-def busquedaCamada(request):
-  return render(request, 'appCoder/busquedaCamada.html')
-
 def buscar(request):
 
-      if  request.GET["camada"]:
+  if  request.GET["camada"]:
 
-	      #respuesta = f"Estoy buscando la camada nro: {request.GET['camada'] }" 
-            camada = request.GET['camada'] 
-            cursos = Curso.objects.filter(camada__icontains=camada)
+	  #respuesta = f"Estoy buscando la camada nro: {request.GET['camada'] }" 
+    camada = request.GET['camada'] 
+    cursos = Curso.objects.filter(camada__icontains=camada)
 
-            return render(request, "AppCoder/resultadosBusqueda.html", {"cursos":cursos, "camada":camada})
+    return render(request, "AppCoder/inicio.html", {"cursos":cursos, "camada":camada})
 
-      else: 
+  else: 
 
-	      respuesta = "No enviaste datos"
+	  respuesta = "No enviaste datos"
 
-      #No olvidar from django.http import HttpResponse
-      return HttpResponse(respuesta)
-     
+    #No olvidar from django.http import HttpResponse
+  return HttpResponse(respuesta)
+
+
+def leerProfesores(request):
+  profesores = Profesor.objects.all() #trae todos los profesores
+  contexto = {"profesores": profesores}
+  return render(request, "AppCoder/leerProfesores.html", contexto)
+
+def eliminarProfesores(request, nombre):
+  profesor = Profesor.objects.get(nombre=nombre)
+  profesor.delete()
+
+  #vuelvo al menu
+
+  profesores = Profesor.objects.all()
+  contexto = {"profesores": profesores}
+  return render(request, "AppCoder/leerProfesores.html", contexto) 
+
+def editarProfesor(request, profesor_nombre):
+  profesor = Profesor.objects.get(nombre=profesor_nombre)
+  if request.method == 'POST':
+    miFormulario = ProfesorFormulario(request.POST)
+
+    if miFormulario.is_valid():
+      informacion = miFormulario.cleaned_data
+      profesor.nombre = informacion['nombre']
+      profesor.apellido = informacion['apellido']
+      profesor.email = informacion['email']
+      profesor.profesion = informacion['profesion']
+      profesor.save()
+
+      return render(request, 'appCoder/inicio.html')
+  else:
+    miFormulario = ProfesorFormulario(initial={'nombre':profesor.nombre, 'apellido':profesor.apellido, 'email':profesor.email, 'profesion':profesor.profesion}) 
+    
+    return render(request, 'appCoder/editarProfesor.html', {"miFormulario": miFormulario, "profesor_nombre": profesor_nombre})
+
+
+#LISTVIEW ------------------------------------
+class CursoList(ListView):
+  model = Curso
+  template_name = "AppCoder/curso.html"

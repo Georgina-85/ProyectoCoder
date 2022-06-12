@@ -2,11 +2,21 @@
 
 {% load static %}
 
+{% block subtitulo %} 
+<br/><br/>
+<h1>Cursos</h1>
+{% endblock %}
+
 {% block contenidoQueCambia %}
     <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+
+    {% block section_name %}
+    <h3>Formulario para ingresar cursos</h3>
+    {% endblock %}
+
     {% if miFormulario.errors %}
 
-    <p style="color: red;"> Están mal los datos, revisar</p>
+    <p style="color: red;"> Están mal los datos</p>
 
     {% endif %}
     <form action="" method="POST">{% csrf_token %}

@@ -26,29 +26,19 @@
 
     {% if cursos %}
 
-    <p>Estamos buscando el: {{camada}}</p>
+        <p>Estamos buscando el: {{camada}}</p>
 
-    <ul>
-	{% for curso in cursos %}
-		<li> {{curso.nombre}} </li>
-		<li> {{curso.camada}} </li>
-	{% endfor %}
-
+        <ul>
+	    {% for curso in cursos %}
+		    <li> {{curso.nombre}} </li>
+		    <li> {{curso.camada}} </li>
+	    {% endfor %}
     
-     
+        {% else %} 
+            <p>No se han encontrado datos</p>
 
+        {% endif %}   
     </ul>
 
-    {% endif %}
-    
-   
-
 {% endblock %}
-
-
-
-</form>
-
-    
-
    

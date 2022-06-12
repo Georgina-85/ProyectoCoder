@@ -2,35 +2,33 @@
 
 {% load static %}
 
+{% block subtitulo %} 
+<br/><br/>
+<h1>Profesores</h1>
+{% endblock %}
+
 {% block contenidoQueCambia %}
-
-
     <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
-    <h1>Formulario - Agregar Profesor</h1>
     
+    {% block section_name %}
+    <h3>Formulario para ingresar profesores</h3>
+    {% endblock %}
+
     {% if miFormulario.errors %}
 
-    <p style="color: red;"> Están mal los datos, revisar</p>
+    <p style="color: red;">Están mal los datos</p>
 
     {% endif %}
-
-
     <form action="" method="POST">{% csrf_token %}
 
         <!-- Acá está la magia de Django-->
         
         <table>
-
             {{ miFormulario.as_table }}
-
-
         </table>
-
 
         <input type="submit", value="Enviar">
 
     </form>
-
-  
 
 {% endblock %}

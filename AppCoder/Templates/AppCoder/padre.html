@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
     <head>
+        {% load static %}
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -14,18 +14,19 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
+        <link href="{%static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="/AppCoder/">Inicio</a>        
-                <a class="btn" href="/AppCoder/curso">Curso</a>
+                <a class="navbar-brand" href="/AppCoder/">Inicio</a>
                 <a class="btn" href="/AppCoder/profesores">Profesores</a>
+                <a class="btn" href="/AppCoder/curso">Cursos</a>
                 <a class="btn" href="/AppCoder/estudiantes">Estudiantes</a>
                 <a class="btn" href="/AppCoder/entregables">Entregables</a>
-                <a class="btn btn-primary" href="/">INICIAR</a>
+                <a class="btn btn-primary" href="/">Iniciar</a>
+
             </div>
         </nav>
         <!-- Masthead-->
@@ -35,22 +36,17 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-5">Nuestra web intermedia de Django</h1>
-                            {% block secion_name %}
+                            <h1 class="mb-5">Nuestra página web Django</h1>
+                            {% block section_name %}
                             {% endblock %}
-                            
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-
-        {% block contenidoQueCambia %}
-
+        <!-- Este es el contenido que va a cambiar -->
+        {% block contenidoQueCambia%}
         {% endblock %}
-      
-       
         <!-- Footer-->
         <footer class="footer bg-light">
             <div class="container">
@@ -94,3 +90,4 @@
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
+    
